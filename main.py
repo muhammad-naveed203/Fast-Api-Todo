@@ -41,13 +41,13 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     return encoded_jwt
 
 
-@app.get("/users", response_model=list[schemas.UserSchema])
+@app.get("/users", response_model=list[schemas.CreateUser])
 def users(db: Session = Depends(get_db)):
     users = get_all_users(db)
     return list(users)
 
 
-@app.post("/signup", response_model=schemas.UserSchema)
+@app.post("/signup", response_model=schemas.CreateUser)
 def sign_up(user_data: schemas.UserCreateSchema, db: Session = Depends(get_db)):
     user = get_user_by_email(db, user_data.email)
     if user:
@@ -79,7 +79,7 @@ def login_for_access_token(
     return {'access_token': access_token, 'token_type': 'bearer'}
 
 
-@app.get("/user/{id:int}", response_model=schemas.UserSchema)
+@app.get("/user/{id:int}", response_model=schemas.CreateUser)
 def get_user(id: int, db: Session = Depends(get_db)):
     user = get_user_by_id(db, id)
     if user:

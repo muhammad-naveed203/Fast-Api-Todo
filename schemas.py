@@ -10,6 +10,14 @@ class UserBase(BaseModel):
 
 
 class UserSchema(UserBase):
+    f_name: str
+    l_name: str
+
+    class Config:
+        orm_mode = True
+
+
+class CreateUser(UserBase):
     id: int
     f_name: str
     l_name: str
